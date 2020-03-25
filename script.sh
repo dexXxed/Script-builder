@@ -1,11 +1,17 @@
 #!/bin/bash
 
+if [ -z "$1" ]
+  then
+    echo "No argument supplied!!! Run with arguments!!"
+    exit 1
+fi
+
 filename=$1 # получаем имя файла, прописанного в аргументах скрипта
 output_line=$(grep "// Output: " $1) # считываем первую строку файла в котором храниться "Output: xxx.out"
 
 if [ -z "$output_line" ] # проверяем нашлась ли Output-строка
 then
-    echo "No Output comment!"
+    echo "No Output comment!!!"
     exit 1 # выходим с кодом 1
 fi
 
