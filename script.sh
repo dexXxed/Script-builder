@@ -22,12 +22,15 @@ TMPDIR=$(mktemp -d build-$1.XXXXXX) # создаем временную дире
 trap "exit 1"           HUP INT PIPE QUIT TERM # задаем сигнал "exit 1" при любой из перечисленных ошибок
 trap 'rm -rf "$TMPDIR"' EXIT # удаляем директорию при выходе из скрипта и при неожиданной остановке
 
-gcc ./$1 -o ./$TMPDIR/$out_file_name # собираем используя gcc
+cd "$TMPDIR"
+gcc ../$1 -o ./$out_file_name # собираем используя gcc во временной директории 
+
+echo "pwd: $PWD" # проверяем, где мы находимся (во временной директории)
 
 if [[ $? -ne 0 ]]; then # проверяем все ли ок с gcc компиляцией
     echo "Compilation error!!!"
     exit 1
 fi
 
-
+cd ..
 mv ./$TMPDIR/$out_file_name . # перемещаем собранный бинарник на уровень программы
