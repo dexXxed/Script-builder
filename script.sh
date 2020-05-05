@@ -13,7 +13,6 @@ else
     exit 1
 fi
 
-filename=$1 # получаем имя файла, прописанного в аргументах скрипта
 output_line=$(grep "// Output: " $1) # считываем первую строку файла в котором храниться "Output: xxx.out"
 allpath=$(readlink -f $1)
 
