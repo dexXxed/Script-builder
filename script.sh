@@ -30,13 +30,13 @@ trap "exit 1"           HUP INT PIPE QUIT TERM # задаем сигнал "exit
 trap 'rm -rf "$TMPDIR"' EXIT # удаляем директорию при выходе из скрипта и при неожиданной остановке
 
 cd "$TMPDIR" # заходим во временную директорию
-gcc $allpath -o "$out_file_name"  # собираем используя gcc во временной директории 
+gcc "$allpath" -o "$out_file_name"  # собираем используя gcc во временной директории 
 
 if [[ $? -ne 0 ]]; then # проверяем все ли ок с gcc компиляцией
     echo "Compilation error!!!"
     exit 1
 fi
 
-path=$( echo ${allpath%/*} )
+path=$( echo "${allpath%/*}" )
 cd "$path" # переходим на уровень .c файла
 mv "$TMPDIR"/"$out_file_name" "$path" # перемещаем собранный бинарник на уровень программы
